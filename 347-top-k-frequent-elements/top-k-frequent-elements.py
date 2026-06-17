@@ -4,11 +4,15 @@ class Solution:
         for num in nums:
             occur[num] = occur.get(num, 0) + 1
 
-        heap = []
+        count = [[] for _ in range(len(nums) + 1)]
+        res = []
 
         for key in occur:
-            heapq.heappush(heap, (occur[key], key))
-            if len(heap) > k:
-                heapq.heappop(heap)
+            count[occur[key]].append(key)
 
-        return [i[1] for i in heap]
+        for bucket in reversed(count):
+            for key in bucket:
+                res.append(key)
+                if len(res) == k:
+                    return res
+        return res
